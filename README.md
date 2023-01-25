@@ -40,15 +40,6 @@ for batch_x,batch_y in dataloader:
 ```
 
 
-## Citations
-```
-@misc{
-      title={MA2BA: A More Accurate and Accelerated Boundary-based Attribution method for Deep Neural Networks}, 
-      author={Zhiyu Zhu and Jiayu Zhang},
-      year={2023}
-}
-```
-
 
 
 
