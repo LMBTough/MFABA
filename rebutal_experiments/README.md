@@ -1,1 +1,0 @@
-move these files to the root directory of the project.
