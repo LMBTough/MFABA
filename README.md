@@ -1,9 +1,10 @@
-# MA2BA
-Implementation of [MA2BA: A More Accurate and Accelerated Boundary-based Attribution method for Deep Neural Networks]
+# MFABA
+
+Implementation of [MFABA: A More Faithful and Accelerated Boundary-based Attribution Method for Deep Neural Networks]
 
 ## Setup
-Run `pip install -r requirements.txt` to install the dependencies. 
 
+Run `pip install -r requirements.txt` to install the dependencies.
 
 ```
 captum==0.6.0
@@ -19,33 +20,30 @@ tqdm==4.64.1
 
 ## Compute Attribution
 
-Complete examples are shown in `ma2ba.ipynb`.Here are some sample code.
+Complete examples are shown in `example.ipynb`.Here are some sample code.
 
 ```python
-from methods import ma2ba_sign_after_softmax_pipeline
+from saliency.saliency_zoo import mfaba_sharp
 
 # Load your model
 model = load_model(...)
 model.to(device)
 model.eval()
 
-# Load your data, data_min is the minimum value of the image in your dataset, datamax is the maximum value of the image in your dataset
-dataloader, data_min, data_max = load_test_dataset()
+# Load your data
+img_batch = torch.load("data/img_batch.pt") # img_batch.shape = (1000,3,224,224)
+target_batch = torch.load("data/label_batch.pt") # target_batch.shape = (1000,)
+
+# Set batch_size
+batch_size = 128
+attributions = [] # init attributions
 
 # Caculate attribution
-for batch_x,batch_y in dataloader:
-    batch_x.to(device)
-    batch_y.to(device)
-    attribution_map,success = ma2ba_sign_after_softmax_pipeline(model, batch_x, batch_y,data_min,data_max)
+for i in range(0, len(img_batch), batch_size):
+    img = img_batch[i:i+batch_size].to(device)
+    target = target_batch[i:i+batch_size].to(device)
+    attributions.append(mfaba_sharp(model, img, target))
+if attributions[0].shape.__len__() == 3:
+    attributions = [np.expand_dims(attribution, axis=0) for attribution in attributions]
+attributions = np.concatenate(attributions, axis=0)
 ```
-
-
-
-
-
-
-
-
-
-
-
