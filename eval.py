@@ -2,7 +2,7 @@ from utils import CausalMetric
 import torch.nn as nn
 from torchvision import transforms
 from torchvision.models import resnet50, inception_v3, googlenet, vgg16, mobilenet_v2
-from saliency.saliency_zoo import big, mfaba_cos, mfaba_norm, mfaba_sharp, mfaba_smooth, agi, ig, sm, sg
+from saliency.saliency_zoo import big, mfaba_cos, mfaba_norm, mfaba_sharp, mfaba_smooth, agi, ig, sm, sg,deeplift
 from tqdm import tqdm
 import torch
 import numpy as np
@@ -28,7 +28,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='inception_v3',
                     choices=["inception_v3", "resnet50", "googlenet", "vgg16", "mobilenet_v2"])
 parser.add_argument('--attr_method', type=str, default='mfaba_sharp',
-                    choices=['big', 'mfaba_cos', 'mfaba_norm', 'mfaba_sharp', 'mfaba_smooth', 'agi', 'ig',  'sm', 'sg'])
+                    choices=['big', 'mfaba_cos', 'mfaba_norm', 'mfaba_sharp', 'mfaba_smooth', 'agi', 'ig',  'sm', 'sg','deeplift'])
 
 args = parser.parse_args()
 

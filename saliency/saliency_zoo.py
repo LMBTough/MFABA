@@ -1,4 +1,4 @@
-from saliency.core import pgd_step, BIG, FGSM, MFABA, MFABACOS, MFABANORM, FGSMGradSingle, FGSMGrad, IntegratedGradient, SaliencyGradient, SmoothGradient
+from saliency.core import pgd_step,DL, BIG, FGSM, MFABA, MFABACOS, MFABANORM, FGSMGradSingle, FGSMGrad, IntegratedGradient, SaliencyGradient, SmoothGradient
 import torch
 import numpy as np
 import random
@@ -87,7 +87,7 @@ def mfaba_norm(model, data, target, data_min=0, data_max=1, epsilon=0.3 * 255, u
     dt, success, _, hats, grads = attack(
         model, data, target, use_sign=use_sign, use_softmax=use_softmax)
     attribution_map = mfaba_norm(data, dt, hats, grads)
-    return attribution_map, success
+    return attribution_map
 
 
 def ig(model, data, target, gradient_steps=50):
@@ -106,3 +106,9 @@ def sg(model, data, target, stdevs=0.15, gradient_steps=50):
     assert len(data.shape) == 4, "Input data must be 4D tensor"
     sg = SmoothGradient(model, stdevs=stdevs)
     return sg(data, target, gradient_steps=gradient_steps)
+
+
+def deeplift(model, data, target):
+    assert len(data.shape) == 4, "Input data must be 4D tensor"
+    dl = DL(model)
+    return dl(data, target)

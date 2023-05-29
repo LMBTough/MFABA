@@ -1,7 +1,7 @@
 import torch.nn as nn
 from torchvision import transforms
 from torchvision.models import resnet50, inception_v3, googlenet, vgg16, mobilenet_v2
-from saliency.saliency_zoo import big, mfaba_cos, mfaba_norm, mfaba_sharp, mfaba_smooth, agi, ig, sm, sg
+from saliency.saliency_zoo import big, mfaba_cos, mfaba_norm, mfaba_sharp, mfaba_smooth, agi, ig, sm, sg,deeplift
 from tqdm import tqdm
 import torch
 import numpy as np
@@ -27,7 +27,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='inception_v3',
                     choices=["inception_v3", "resnet50", "googlenet", "vgg16", "mobilenet_v2"])
 parser.add_argument('--attr_method', type=str, default='mfaba_sharp',
-                    choices=['big', 'mfaba_cos', 'mfaba_norm', 'mfaba_sharp', 'mfaba_smooth', 'agi', 'ig',  'sm', 'sg'])
+                    choices=['big', 'mfaba_cos', 'mfaba_norm', 'mfaba_sharp', 'mfaba_smooth', 'agi', 'ig',  'sm', 'sg','deeplift'])
 
 args = parser.parse_args()
 
@@ -56,6 +56,8 @@ if __name__ == "__main__":
     elif args.attr_method == 'sm':
         batch_size = 64
     elif args.attr_method == 'sg':
+        batch_size = 4
+    elif args.attr_method == 'deeplift':
         batch_size = 4
     for i in tqdm(range(0, len(img_batch), batch_size)):
         img = img_batch[i:i+batch_size].to(device)
