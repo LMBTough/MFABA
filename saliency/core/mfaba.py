@@ -141,6 +141,7 @@ class MFABA:
         self.model = model
 
     def __call__(self, hats, grads):
+        # core algorithm
         t_list = hats[1:] - hats[:-1]
         grads = grads[:-1]
         total_grads = -torch.sum(t_list * grads, dim=0)
