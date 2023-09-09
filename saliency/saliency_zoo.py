@@ -6,6 +6,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def agi(model, data, target, epsilon=0.05, max_iter=20, topk=1):
+    model = model[:2]
     assert len(data.shape) == 4, "Input data must be 4D tensor"
     random.seed(3407)
     selected_ids = random.sample(list(range(0, 999)), topk)
