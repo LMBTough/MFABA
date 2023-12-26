@@ -93,8 +93,6 @@ class FGSMGradSingle:
         for _ in range(num_steps):
             output = model(dt)
             model.zero_grad()
-            loss = self.criterion(output, target)
-            loss.backward(retain_graph=True)
             if use_softmax:
                 tgt_out = F.softmax(output, dim=-1)[:, target]
             else:
@@ -102,7 +100,7 @@ class FGSMGradSingle:
             grad = torch.autograd.grad(tgt_out, dt)[0]
             grads.append(grad.clone())
             if use_sign:
-                data_grad = dt.grad.detach().sign()
+                data_grad = grad.detach().sign()
                 adv_data = dt + alpha * data_grad
                 total_grad = adv_data - data
                 total_grad = torch.clamp(
@@ -122,8 +120,6 @@ class FGSMGradSingle:
                     break
         adv_pred = model(dt)
         model.zero_grad()
-        loss = self.criterion(adv_pred, target)
-        loss.backward(retain_graph=True)
         if use_softmax:
             tgt_out = F.softmax(adv_pred, dim=-1)[:, target]
         else:
