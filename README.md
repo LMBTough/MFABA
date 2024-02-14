@@ -13,8 +13,7 @@
     <td align="center"> 
       <img src="./appendix/second2.png" alt="Image 1" style="width: 400px;"/> 
       <br>
-      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 1:</strong> Linear and non-linear path of the direction for ad-
-versarial attack and baseline samples.</em>
+      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 1:</strong> Linear and non-linear path of the direction for adversarial attack and baseline samples.</em>
     </td>
   </tr>
 </table>
